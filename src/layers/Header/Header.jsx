@@ -4,7 +4,7 @@ import MainLogo from "./mainLogo/MainLogo";
 const Header = () => {
     return (
         <nav className="main-nav">
-            <Link className="main-nav-logo" to={""}>
+            <Link className="main-nav-logo" to={"/"}>
                 <MainLogo />
             </Link>
             <div>

@@ -8,13 +8,13 @@ import Footer from "./layers/Footer/Footer";
 function App() {
     return (
         <>
-        <Routes>
-            <Route exact path="" element={<LandingPage />}></Route>
-            <Route exact path="/log" element={<LoginPage />}></Route>
-            <Route exact path="/profile" element={<ProfilePage />}></Route>
-        </Routes>
+            <Routes>
+                <Route exact path="" element={<LandingPage />}></Route>
+                <Route exact path="/log" element={<LoginPage />}></Route>
+                <Route exact path="/profile" element={<ProfilePage />}></Route>
+            </Routes>
             <Footer />
-</>
+        </>
     );
 }
 

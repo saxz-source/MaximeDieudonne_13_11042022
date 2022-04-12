@@ -1,7 +1,7 @@
 import FeatureItem from "../FeatureItem/FeatureItem";
 import "./featureItems_Zone.css";
 
-const FeatureItems_Zone = () => {
+const FeatureItemsZone = () => {
     const featureItemsData = [
         {
             imgName: "icon-chat.png",
@@ -37,4 +37,4 @@ const FeatureItems_Zone = () => {
     );
 };
 
-export default FeatureItems_Zone;
+export default FeatureItemsZone;
