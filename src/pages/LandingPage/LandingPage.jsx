@@ -2,11 +2,11 @@ import LandingPageZone from "../../components/LandingPage/LandingPageZone/Landin
 import Header from "../../layers/Header/Header";
 import "./landingPage.css";
 
-const LandingPage = () => {
+const LandingPage = ({isLogged}) => {
     return (
         <>
-            <Header />
-            <LandingPageZone/>
+            <Header isLogged={isLogged} />
+            <LandingPageZone isLogged={isLogged}/>
         </>
     );
 };

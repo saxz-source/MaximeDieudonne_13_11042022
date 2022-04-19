@@ -11,8 +11,8 @@ const AccountZone = () => {
         },
     ];
 
-    return accounts.map((account) => {
-        return <Account account={account} />;
+    return accounts.map((account, index) => {
+        return <Account account={account} key={index+account.name} />;
     });
 };
 

@@ -1,6 +1,6 @@
 import LoginForm from "../LoginForm/LoginForm";
 import "./loginZone.css";
-/** Display the login block where is displayed the log in form */
+/** @returns the login block where is displayed the log in form */
 const LoginZone = () => {
     return (
         <section className="sign-in-content">
