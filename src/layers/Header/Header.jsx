@@ -8,7 +8,7 @@ const Header = () => {
                 <MainLogo />
             </Link>
             <div>
-                <Link className="main-nav-item" to={"/log"}>
+                <Link className="main-nav-item" to={"/login"}>
                     <i className="fa fa-user-circle"></i>
                     Sign In
                 </Link>

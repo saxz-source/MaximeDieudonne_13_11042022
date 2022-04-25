@@ -7,18 +7,23 @@ const { actions, reducer } = createSlice({
     initialState: {
         id: null,
         firstName: null,
-        lastName : null,
+        lastName: null,
         isLogged: false,
-        token: null,
     },
     reducers: {
+        // log the user
         updateUserConnexion: (state, action) => {
-            state.token = action.payload;
+            sessionStorage.setItem("token", action.payload);
+            //   state.token = action.payload;
             state.isLogged = true;
         },
-
+        // Add names to the user object
+        setUserName: (state, action) => {
+            state.firstName = action.payload.firstName;
+            state.lastName = action.payload.lastName;
+        },
     },
 });
 
-export const { updateUserConnexion } = actions;
+export const { updateUserConnexion, setUserName } = actions;
 export default reducer;
