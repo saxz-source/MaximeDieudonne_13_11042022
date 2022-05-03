@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { useState } from "react";
 import AccountOwnerName from "../AccountOwnerName/AccountOwnerName";
 import ModifyName from "../ModifyName/ModifyName";
+import StandardButton from "../../Utils/StandardButton";
 
 /**@returns the header of the profile page */
 const ProfileHeader = ({ userName }) => {
@@ -19,14 +20,24 @@ const ProfileHeader = ({ userName }) => {
 
     return (
         <div className="header">
-            <h1>Welcome Back</h1>
+            <h1>
+                Welcome Back <br/>
+                {!isEditing && (
+                    <AccountOwnerName
+                        userName={userName}
+                        toggleEditingName={toggleEditingName}
+                    />
+                )}
+            </h1>
 
             {!isEditing && (
-                <AccountOwnerName
-                    userName={userName}
-                    toggleEditingName={toggleEditingName}
-                />
+                <StandardButton
+                    clickAction={toggleEditingName}
+                    text={"Edit Name"}
+                    style={"edit-button"}
+                ></StandardButton>
             )}
+
             {isEditing && (
                 <ModifyName
                     userName={userName}

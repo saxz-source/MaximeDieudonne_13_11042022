@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import LoginPageZone from "../../components/LoginPage/LoginPageZone/LoginPageZone";
-import Header from "../../layers/Header/Header";
+import PropTypes from "prop-types";
 
+/** @returns the login page */
 const LoginPage = ({ isLogged }) => {
     const navigate = useNavigate();
 
@@ -14,10 +15,13 @@ const LoginPage = ({ isLogged }) => {
 
     return (
         <>
-            <Header isLogged={isLogged} />
             <LoginPageZone isLogged={isLogged} />
         </>
     );
+};
+
+LoginPage.propTypes = {
+    isLogged: PropTypes.bool.isRequired,
 };
 
 export default LoginPage;

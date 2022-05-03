@@ -15,7 +15,7 @@ export const isUserLogged = () => {
 export const getUserName = () => {
     return (state) => {
         return {
-            firstName: state.user.name,
+            firstName: state.user.firstName,
             lastName: state.user.lastName,
         };
     };
@@ -23,7 +23,7 @@ export const getUserName = () => {
 
 
 /**
- * Get the userr name
+ * Get the user state
  * @returns {{firstName : string, lastName:string}}
  */
  export const getUser = () => {

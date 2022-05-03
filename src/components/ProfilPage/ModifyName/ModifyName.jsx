@@ -4,6 +4,7 @@ import { updateUserName } from "../../../API/APICalls";
 import * as userAction from "../../../features/user.slice";
 import PropTypes from "prop-types";
 import StandardButton from "../../Utils/StandardButton";
+import "./ModifyName.css";
 
 /** @returns The form to edit the name is the profile page */
 const ModifyName = ({ userName, toggleEditingName }) => {
@@ -36,7 +37,6 @@ const ModifyName = ({ userName, toggleEditingName }) => {
                 firstName,
                 lastName,
             };
-            console.log(toggleEditingName);
             updateUserName(actionPayload).then(() => {
                 dispatch(userAction.setUserName(actionPayload));
                 toggleEditingName();
@@ -65,22 +65,25 @@ const ModifyName = ({ userName, toggleEditingName }) => {
     };
 
     return (
-        <form>
-            <input
-                type="text"
-                onChange={(e) => {
-                    handleFirstName(e);
-                }}
-                placeholder={firstName}
-            />
-            <input
-                type="text"
-                onChange={(e) => {
-                    handleLastName(e);
-                }}
-                placeholder={lastName}
-            />
-            <div>
+        <form className="modifyNameForm">
+            <div className="input-wrapper formLines ">
+                <input
+                    type="text"
+                    onChange={(e) => {
+                        handleFirstName(e);
+                    }}
+                    placeholder={firstName}
+                />
+                <input
+                    type="text"
+                    onChange={(e) => {
+                        handleLastName(e);
+                    }}
+                    placeholder={lastName}
+                />
+            </div>
+
+            <div className="formLines">
                 <StandardButton
                     text={"Save"}
                     clickAction={handleSaveName}

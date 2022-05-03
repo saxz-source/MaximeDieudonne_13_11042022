@@ -1,19 +1,15 @@
 import PropTypes from "prop-types";
-import StandardButton from "../../Utils/StandardButton";
+import "./AccountOwnerName.css"
 
 /** @returns the name part of the account header with the button to modify */
-const AccountOwnerName = ({ userName, toggleEditingName }) => {
+const AccountOwnerName = ({ userName }) => {
     return (
         <>
-            <span>
+            <span className="accountOwnerName">
                 {userName.firstName} {userName.lastName}!
             </span>
 
-            <StandardButton
-                clickAction={toggleEditingName}
-                text={"Edit Name"}
-                style={"edit-button"}
-            ></StandardButton>
+     
         </>
     );
 };

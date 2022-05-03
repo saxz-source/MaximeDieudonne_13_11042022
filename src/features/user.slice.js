@@ -1,20 +1,25 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-//export const userLogin = createAction('user/login')
+const initialUserState = {
+    id: null,
+    firstName: null,
+    lastName: null,
+    isLogged: false,
+};
 
 const { actions, reducer } = createSlice({
     name: "user",
-    initialState: {
-        id: null,
-        firstName: null,
-        lastName: null,
-        isLogged: false,
-    },
+    initialState: initialUserState,
     reducers: {
         // log the user
         updateUserConnexion: (state, action) => {
-            sessionStorage.setItem("token", action.payload);
-            //   state.token = action.payload;
+            console.log(action.payload)
+            const { token, rememberMe } = action.payload;
+            if (token) {
+                if (rememberMe) {
+                    localStorage.setItem("token", token);
+                }
+            }
             state.isLogged = true;
         },
         // Add names to the user object
@@ -22,8 +27,14 @@ const { actions, reducer } = createSlice({
             state.firstName = action.payload.firstName;
             state.lastName = action.payload.lastName;
         },
+        // disconnect the user
+        logOutUser: (state, action) => {
+            sessionStorage.removeItem("token");
+            state.isLogged = false;
+            state = initialUserState;
+        },
     },
 });
 
-export const { updateUserConnexion, setUserName } = actions;
+export const { updateUserConnexion, setUserName, logOutUser } = actions;
 export default reducer;

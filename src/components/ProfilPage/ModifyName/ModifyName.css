@@ -1,0 +1,26 @@
+.modifyNameForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 500px;
+}
+
+.formLines {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.input-wrapper input {
+    padding: 5px;
+    font-size: 1.2rem;
+    width: 200px;
+    margin-right: 1rem;
+}
+
+.formLines button {
+    margin-right: 1rem;
+    width: 120px;
+}

@@ -9,10 +9,20 @@ const AccountZone = () => {
             amount: "$2,082.79",
             description: "Available Balance",
         },
+        {
+            name: "Argent Bank Checking (x8349)",
+            amount: "$2,082.79",
+            description: "Available Balance",
+        },
+        {
+            name: "Argent Bank Checking (x8349)",
+            amount: "$2,082.79",
+            description: "Available Balance",
+        },
     ];
 
     return accounts.map((account, index) => {
-        return <Account account={account} key={index+account.name} />;
+        return <Account account={account} key={index + account.name} />;
     });
 };
 

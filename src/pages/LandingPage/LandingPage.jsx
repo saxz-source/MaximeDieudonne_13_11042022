@@ -1,14 +1,18 @@
 import LandingPageZone from "../../components/LandingPage/LandingPageZone/LandingPageZone";
-import Header from "../../layers/Header/Header";
 import "./landingPage.css";
+import PropTypes from "prop-types";
 
-const LandingPage = ({isLogged}) => {
+/**@returns The landing page */
+const LandingPage = ({ isLogged }) => {
     return (
         <>
-            <Header isLogged={isLogged} />
-            <LandingPageZone isLogged={isLogged}/>
+            <LandingPageZone isLogged={isLogged} />
         </>
     );
+};
+
+ LandingPage.propType = {
+    isLogged: PropTypes.bool.isRequired,
 };
 
 export default LandingPage;

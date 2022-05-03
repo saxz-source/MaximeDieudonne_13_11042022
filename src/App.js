@@ -6,13 +6,19 @@ import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import Footer from "./layers/Footer/Footer";
 import { isUserLogged } from "./features/user.selector";
 import { useSelector } from "react-redux";
+import Header from "./layers/Header/Header";
+import { useEffect, useState } from "react";
 
 function App() {
     const isLogged = useSelector(isUserLogged());
 
+
+
     return (
         <>
+     
             <BrowserRouter>
+            <Header isLogged={isLogged}></Header>
                 <Routes>
                     <Route
                         exact

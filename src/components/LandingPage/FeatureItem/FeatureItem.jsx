@@ -2,11 +2,11 @@ import "./featureItem.css"
 
 const FeatureItem = ({ imgName, title, text }) => {
 
-   console.log(imgName)
+
     return (
         <div className="feature-item">
             <img
-                src= {`../../../assets/${imgName}`}
+                src= {imgName}
                 alt={imgName}
                 className="feature-icon"
             />

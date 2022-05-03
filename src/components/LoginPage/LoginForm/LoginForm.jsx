@@ -3,6 +3,7 @@ import { logIn } from "../../../API/APICalls";
 import "./loginForm.css";
 import { useDispatch } from "react-redux";
 import * as userAction from "../../../features/user.slice";
+import StandardButton from "../../Utils/StandardButton";
 
 /** @returns the login form */
 const LoginForm = () => {
@@ -13,7 +14,7 @@ const LoginForm = () => {
     /** The password from form @type {string} */
     const [password, setPassword] = useState("");
     /** The checkbox "remember me" status from form @type {boolean} */
-    const [rememberMe, setRememberMe] = useState("");
+    const [rememberMe, setRememberMe] = useState(false);
     /** The array of form errors @type {{userNameError:boolean, passwordError:boolean}} */
     const [formErrors, setFormErrors] = useState({
         userNameError: false,
@@ -39,7 +40,9 @@ const LoginForm = () => {
      * @param {React.ChangeEvent<HTMLInputElement>} e
      * @returns {void}
      */
-    const handleRememberMe = (e) => setRememberMe(e.target.value);
+    const handleRememberMe = (e) => {
+        setRememberMe(!rememberMe);
+    };
 
     /**
      * Create the payload with user informations and and send it to server
@@ -58,12 +61,14 @@ const LoginForm = () => {
             password: password,
         };
         logIn(payload).then((res) => {
-            dispatch(userAction.updateUserConnexion(res));
+            dispatch(
+                userAction.updateUserConnexion({ token: res, rememberMe })
+            );
         });
     };
 
     return (
-        <form>
+        <form className="loginForm">
             <div className="input-wrapper">
                 <label htmlFor="username">Username</label>
                 <input
@@ -89,14 +94,16 @@ const LoginForm = () => {
                     type="checkbox"
                     id="remember-me"
                     onChange={handleRememberMe}
-                    value={rememberMe}
+                    checked={rememberMe}
                 />
                 <label htmlFor="remember-me">Remember me</label>
             </div>
 
-            <button className="sign-in-button" onClick={handleForm}>
-                Sign In
-            </button>
+            <StandardButton
+                text="Sign In"
+                clickAction={handleForm}
+                style="signInButton edit-button"
+            />
         </form>
     );
 };

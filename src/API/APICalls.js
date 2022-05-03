@@ -27,14 +27,13 @@ export const fetchUserName = async () => {
     const APICall = API;
     APICall.defaults.headers.common[
         "Authorization"
-    ] = `Bearer ${sessionStorage.token}`;
+    ] = `Bearer ${localStorage.token}`;
     // Execute call
     return APICall({
         method: "POST",
         url: "user/profile",
     })
         .then((res) => {
-            console.log(res);
             const { firstName, lastName } = res.data.body;
             if (res.status === 200 && firstName && lastName) {
                 return (res = {
@@ -53,11 +52,10 @@ export const fetchUserName = async () => {
  * @returns {Promise<{firstName:string, lastName:string}>}
  */
 export const updateUserName = async (newNames) => {
-    console.log(newNames);
     const APICall = API;
     APICall.defaults.headers.common[
         "Authorization"
-    ] = `Bearer ${sessionStorage.token}`;
+    ] = `Bearer ${localStorage.token}`;
     return APICall({
         method: "PUT",
         url: "user/profile",

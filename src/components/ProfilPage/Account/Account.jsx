@@ -1,6 +1,11 @@
 import "./Account.css";
+import StandardButton from "../../Utils/StandardButton";
 /** An account */
 const Account = ({ account }) => {
+    const handleView = () => {
+        return;
+    };
+
     return (
         <section className="account">
             <div className="account-content-wrapper">
@@ -11,9 +16,12 @@ const Account = ({ account }) => {
                 </p>
             </div>
             <div className="account-content-wrapper cta">
-                <button className="transaction-button">
-                    View transactions
-                </button>
+                <StandardButton
+                    text="View transactions"
+                    clickAction={handleView}
+                    style="edit-button accountView"
+                >
+                </StandardButton>
             </div>
         </section>
     );

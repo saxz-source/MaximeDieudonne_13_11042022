@@ -1,10 +1,12 @@
 import LoginForm from "../LoginForm/LoginForm";
 import "./loginZone.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 /** @returns the login block where is displayed the log in form */
 const LoginZone = () => {
     return (
         <section className="sign-in-content">
-            <i className="fa fa-user-circle sign-in-icon"></i>
+          <FontAwesomeIcon icon={faUserCircle} className="sign-in-icon "/>
             <h1>Sign In</h1>
             <LoginForm />
         </section>
