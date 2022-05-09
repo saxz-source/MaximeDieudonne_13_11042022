@@ -1,13 +1,15 @@
 import { useState } from "react";
-import { logIn } from "../../../API/APICalls";
 import "./loginForm.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as userAction from "../../../features/user.slice";
 import StandardButton from "../../Utils/StandardButton";
+import { loginRequestStatus } from "../../../features/user.selector";
 
 /** @returns the login form */
 const LoginForm = () => {
     const dispatch = useDispatch();
+
+    const logInRequestStatus = useSelector(loginRequestStatus())
 
     /** The username from form @type {string} */
     const [userName, setUserName] = useState("");
@@ -20,8 +22,6 @@ const LoginForm = () => {
         userNameError: false,
         passwordError: false,
     });
-
-    //  const navigate = useNavigate()
 
     /**
      * Save the value written in the user name field
@@ -60,11 +60,8 @@ const LoginForm = () => {
             email: userName,
             password: password,
         };
-        logIn(payload).then((res) => {
-            dispatch(
-                userAction.updateUserConnexion({ token: res, rememberMe })
-            );
-        });
+
+        dispatch(userAction.logInRequest(payload))
     };
 
     return (
@@ -98,6 +95,8 @@ const LoginForm = () => {
                 />
                 <label htmlFor="remember-me">Remember me</label>
             </div>
+
+            {logInRequestStatus.error && <div> {logInRequestStatus.error}</div>}
 
             <StandardButton
                 text="Sign In"

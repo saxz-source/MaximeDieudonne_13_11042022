@@ -2,11 +2,11 @@ import PropTypes from "prop-types";
 import "./AccountOwnerName.css"
 
 /** @returns the name part of the account header with the button to modify */
-const AccountOwnerName = ({ userName }) => {
+const AccountOwnerName = ({ user }) => {
     return (
         <>
             <span className="accountOwnerName">
-                {userName.firstName} {userName.lastName}!
+                {user.firstName} {user.lastName}!
             </span>
 
      
@@ -15,7 +15,7 @@ const AccountOwnerName = ({ userName }) => {
 };
 
 AccountOwnerName.propType = {
-    userName: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired,
     toggleEditingName: PropTypes.func.isRequired,
 };
 

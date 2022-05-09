@@ -6,10 +6,10 @@ import PropTypes from 'prop-types';
 
 
 
-const ProfilePageZone = ({ userName }) => {
+const ProfilePageZone = ({ user }) => {
     return (
         <main className="main bg-dark">
-            <ProfileHeader userName={userName} />
+            <ProfileHeader user={user} />
             <h2 className="sr-only">Accounts</h2>
             <AccountZone />
         </main>
@@ -17,7 +17,7 @@ const ProfilePageZone = ({ userName }) => {
 };
 
 ProfilePageZone.propType = {
-    userName: PropTypes.userName,
+    user: PropTypes.object,
 };
 
 export default ProfilePageZone;

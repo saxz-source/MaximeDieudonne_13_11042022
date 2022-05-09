@@ -4,7 +4,14 @@
  */
 export const isUserLogged = () => {
     return (state) => {
-        return state.user.isLogged;
+        return state.user.user.isLogged;
+    };
+};
+
+
+export const loginRequestStatus = () => {
+    return (state) => {
+        return state.user.token;
     };
 };
 
@@ -15,8 +22,8 @@ export const isUserLogged = () => {
 export const getUserName = () => {
     return (state) => {
         return {
-            firstName: state.user.firstName,
-            lastName: state.user.lastName,
+            firstName: state.user.user.firstName,
+            lastName: state.user.user.lastName,
         };
     };
 };
@@ -28,6 +35,6 @@ export const getUserName = () => {
  */
  export const getUser = () => {
     return (state) => {
-        return state.user
+        return state.user.user
     };
 };

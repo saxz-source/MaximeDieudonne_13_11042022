@@ -4,9 +4,10 @@ import { useState } from "react";
 import AccountOwnerName from "../AccountOwnerName/AccountOwnerName";
 import ModifyName from "../ModifyName/ModifyName";
 import StandardButton from "../../Utils/StandardButton";
+import Loader from "../../Utils/Loading/Loader";
 
 /**@returns the header of the profile page */
-const ProfileHeader = ({ userName }) => {
+const ProfileHeader = ({ user }) => {
     /** The toggle state to know if the edit form is open @type {boolean} */
     const [isEditing, setIsEditing] = useState(false);
 
@@ -18,13 +19,17 @@ const ProfileHeader = ({ userName }) => {
         setIsEditing(!isEditing);
     };
 
+    if (user.isLoading){
+        return (<Loader/>)
+    }
+
     return (
         <div className="header">
             <h1>
                 Welcome Back <br/>
                 {!isEditing && (
                     <AccountOwnerName
-                        userName={userName}
+                        user={user}
                         toggleEditingName={toggleEditingName}
                     />
                 )}
@@ -40,7 +45,7 @@ const ProfileHeader = ({ userName }) => {
 
             {isEditing && (
                 <ModifyName
-                    userName={userName}
+                    user={user}
                     toggleEditingName={toggleEditingName}
                 />
             )}
@@ -49,7 +54,7 @@ const ProfileHeader = ({ userName }) => {
 };
 
 ProfileHeader.propType = {
-    userName: PropTypes.userName,
+    user: PropTypes.object,
 };
 
 export default ProfileHeader;

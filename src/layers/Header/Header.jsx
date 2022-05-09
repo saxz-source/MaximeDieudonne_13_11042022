@@ -1,6 +1,4 @@
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getUserName } from "../../features/user.selector";
 import "./header.css";
 import MainLogo from "./mainLogo/MainLogo";
 import ProfileLink from "./profileLink/ProfileLink";
@@ -9,10 +7,7 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 /** @returns the header bar */
-const Header = ({ isLogged }) => {
-    /** @type {{firstName:string, lastName :string}} */
-    const userName = useSelector(getUserName());
-
+const Header = ({ user }) => {
     return (
         <nav className="main-nav">
             <Link className="main-nav-logo" to={"/"}>
@@ -20,7 +15,7 @@ const Header = ({ isLogged }) => {
             </Link>
 
             <ul className="navList">
-                {!isLogged && (
+                {!user.isLogged && (
                     <li>
                         <Link className="main-nav-item" to={"/login"}>
                             <FontAwesomeIcon icon={faUserCircle} />
@@ -29,12 +24,12 @@ const Header = ({ isLogged }) => {
                     </li>
                 )}
 
-                {isLogged && (
+                {user.isLogged && (
                     <Link to={"/profile"}>
-                        <ProfileLink firstName={userName.firstName} />
+                        <ProfileLink user={user} />
                     </Link>
                 )}
-                {isLogged && <SignOut />}
+                {user.isLogged && <SignOut />}
             </ul>
         </nav>
     );

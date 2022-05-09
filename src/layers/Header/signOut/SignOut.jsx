@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import * as userAction from "../../../features/user.slice";
+import  {userActions} from "../../../features/user.slice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 
@@ -12,7 +12,7 @@ const SignOut = () => {
      * @returns {void}
      */
     const handleSignOut = () => {
-        dispatch(userAction.logOutUser());
+        dispatch(userActions.logOutUser());
     };
 
     return (

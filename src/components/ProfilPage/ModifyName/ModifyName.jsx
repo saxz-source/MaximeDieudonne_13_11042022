@@ -1,17 +1,17 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { updateUserName } from "../../../API/APICalls";
-import * as userAction from "../../../features/user.slice";
+import { modifyUserName, modifyUserNameRequest, userActions } from "../../../features/user.slice";
 import PropTypes from "prop-types";
 import StandardButton from "../../Utils/StandardButton";
 import "./ModifyName.css";
 
 /** @returns The form to edit the name is the profile page */
-const ModifyName = ({ userName, toggleEditingName }) => {
+const ModifyName = ({ user, toggleEditingName }) => {
     /** The first name of the user @type {string} */
-    const [firstName, setFirstName] = useState(userName.firstName);
+    const [firstName, setFirstName] = useState(user?.firstName);
     /** The last name of the user @type {string} */
-    const [lastName, setLastName] = useState(userName.lastName);
+    const [lastName, setLastName] = useState(user?.lastName);
 
     const dispatch = useDispatch();
 
@@ -37,10 +37,7 @@ const ModifyName = ({ userName, toggleEditingName }) => {
                 firstName,
                 lastName,
             };
-            updateUserName(actionPayload).then(() => {
-                dispatch(userAction.setUserName(actionPayload));
-                toggleEditingName();
-            });
+            dispatch(modifyUserNameRequest(actionPayload))
         }
     };
 
@@ -100,7 +97,7 @@ const ModifyName = ({ userName, toggleEditingName }) => {
 };
 
 ModifyName.propType = {
-    userName: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired,
     toggleEditingName: PropTypes.func.isRequired,
 };
 
