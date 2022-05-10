@@ -2,6 +2,8 @@ import { useState } from "react";
 import "./loginForm.css";
 import { useDispatch, useSelector } from "react-redux";
 import * as userAction from "../../../features/user.slice";
+import {userActions} from "../../../features/user.slice";
+
 import StandardButton from "../../Utils/StandardButton";
 import { loginRequestStatus } from "../../../features/user.selector";
 
@@ -9,7 +11,7 @@ import { loginRequestStatus } from "../../../features/user.selector";
 const LoginForm = () => {
     const dispatch = useDispatch();
 
-    const logInRequestStatus = useSelector(loginRequestStatus())
+    const logInRequestStatus = useSelector(loginRequestStatus());
 
     /** The username from form @type {string} */
     const [userName, setUserName] = useState("");
@@ -51,17 +53,17 @@ const LoginForm = () => {
      */
     const handleForm = (e) => {
         e.preventDefault();
-
         if (!userName || !password) {
             return;
         }
-
         const payload = {
             email: userName,
             password: password,
+            rememberMe : rememberMe
         };
+        dispatch(userActions.rememberUser(rememberMe))
+        dispatch(userAction.logInRequest(payload));
 
-        dispatch(userAction.logInRequest(payload))
     };
 
     return (

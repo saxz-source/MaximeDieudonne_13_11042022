@@ -38,7 +38,9 @@ const ModifyName = ({ user, toggleEditingName }) => {
                 lastName,
             };
             dispatch(modifyUserNameRequest(actionPayload))
+            
         }
+        toggleEditingName()
     };
 
     /**

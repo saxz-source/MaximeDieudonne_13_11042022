@@ -31,15 +31,16 @@ export const logIn = async (payload) => {
 };
 
 /**
- * Festch the user Names
+ * Fetch the user Names
  * @returns {Promise<{firstName:string, lastName:string}>}
  */
-export const fetchUser = async () => {
+export const fetchUser = async (token) => {
+   console.log("oui")
     // Add token to the headers
     const APICall = API;
     APICall.defaults.headers.common[
         "Authorization"
-    ] = `Bearer ${localStorage.token}`;
+    ] = `Bearer ${token}`;
     // Execute call
     return APICall({
         method: "POST",

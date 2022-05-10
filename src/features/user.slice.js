@@ -14,6 +14,7 @@ const initialUserState = {
         firstName: null,
         lastName: null,
         isLogged: false,
+        rememberMe : false
     },
 };
 
@@ -23,6 +24,7 @@ const initialUserState = {
 export const logInRequest = createAsyncThunk(
     "user/logInRequest",
     async (data) => {
+        console.log(data)
         const response = await logIn(data);
         return response.data.body;
     }
@@ -30,8 +32,10 @@ export const logInRequest = createAsyncThunk(
 
 export const fetchUserRequest = createAsyncThunk(
     "user/fetchUserRequest",
-    async (data) => {
-        const response = await fetchUser(data);
+    async (data,{ getState }) => {
+      
+        const token = getState().user.token.token;
+        const response = await fetchUser(token);
         return response.data.body;
     }
 );
@@ -39,6 +43,7 @@ export const fetchUserRequest = createAsyncThunk(
 export const modifyUserNameRequest = createAsyncThunk(
     "user/modifyUserNameRequest",
     async (data) => {
+        console.log(data)
         const response = await updateUserName(data);
         return response.data.body;
     }
@@ -48,9 +53,16 @@ const userSlice = createSlice({
     name: "user",
     initialState: initialUserState,
     reducers: {
+        logUserWithStorage : (state,action)=> {
+            state.token.token = action.payload
+            state.user.isLogged = true
+        },
+        rememberUser : (state,action)=>{
+            state.user.rememberMe = true
+        },
         // disconnect the user
         logOutUser: (state, action) => {
-            sessionStorage.removeItem("token");
+            localStorage.removeItem("token");
             state.user.isLogged = false;
             state = initialUserState;
         },
@@ -66,24 +78,29 @@ const userSlice = createSlice({
             state.token.error = null;
             state.token.token = action.payload.token;
             state.user.isLogged = true;
+            console.log(action)
+            localStorage.setItem("token", `${state.token.token}`)
+
         });
         builder.addCase(logInRequest.rejected, (state, action) => {
-            console.log(action);
             state.token.loading = false;
             state.token.error = action.error.message;
+            console.log(state.token.error)
         });
         // FETCH USER REQUEST
         builder.addCase(fetchUserRequest.pending, (state) => {
             state.user.loading = true;
         });
         builder.addCase(fetchUserRequest.fulfilled, (state, action) => {
+            console.log(action)
             state.user.loading = false;
             state.user.firstName = action.payload.firstName;
             state.user.lastName = action.payload.lastName;
         });
-        builder.addCase(fetchUserRequest.rejected, (state) => {
+        builder.addCase(fetchUserRequest.rejected, (state,action) => {
             state.user.loading = false;
             state.user.error = true;
+            console.log(action)
         });
         // MODIFY NAME REQUEST
         builder.addCase(modifyUserNameRequest.pending, (state) => {
@@ -94,9 +111,11 @@ const userSlice = createSlice({
             state.user.firstName = action.payload.firstName;
             state.user.lastName = action.payload.lastName;
         });
-        builder.addCase(modifyUserNameRequest.rejected, (state) => {
+        builder.addCase(modifyUserNameRequest.rejected, (state,action) => {
             state.user.loading = false;
             state.user.error = true;
+            console.log(action.error)
+
         });
     },
 });

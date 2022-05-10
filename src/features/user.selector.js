@@ -38,3 +38,10 @@ export const getUserName = () => {
         return state.user.user
     };
 };
+
+
+export const getUserToken=()=>{
+    return (state)=>{
+        state.user.token.token
+    }
+}

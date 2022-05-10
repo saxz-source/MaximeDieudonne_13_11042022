@@ -1,34 +1,18 @@
-import { Link } from "react-router-dom";
 import "./header.css";
 import MainLogo from "./mainLogo/MainLogo";
 import ProfileLink from "./profileLink/ProfileLink";
 import SignOut from "./signOut/SignOut";
 import PropTypes from "prop-types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
+
+import SignIn from "./signIn/SignIn";
 /** @returns the header bar */
 const Header = ({ user }) => {
     return (
         <nav className="main-nav">
-            <Link className="main-nav-logo" to={"/"}>
-                <MainLogo />
-            </Link>
-
+            <MainLogo />
             <ul className="navList">
-                {!user.isLogged && (
-                    <li>
-                        <Link className="main-nav-item" to={"/login"}>
-                            <FontAwesomeIcon icon={faUserCircle} />
-                            <span className="signInSpan">Sign In</span>
-                        </Link>
-                    </li>
-                )}
-
-                {user.isLogged && (
-                    <Link to={"/profile"}>
-                        <ProfileLink user={user} />
-                    </Link>
-                )}
+                {!user.isLogged && <SignIn />}
+                {user.isLogged && <ProfileLink user={user} />}
                 {user.isLogged && <SignOut />}
             </ul>
         </nav>
@@ -36,7 +20,7 @@ const Header = ({ user }) => {
 };
 
 Header.propType = {
-    isLogged: PropTypes.bool.isRequired,
+    isLogged: PropTypes.object.isRequired,
 };
 
 export default Header;

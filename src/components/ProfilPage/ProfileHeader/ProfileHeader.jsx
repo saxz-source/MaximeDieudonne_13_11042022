@@ -19,14 +19,14 @@ const ProfileHeader = ({ user }) => {
         setIsEditing(!isEditing);
     };
 
-    if (user.isLoading){
-        return (<Loader/>)
+    if (user.isLoading) {
+        return <Loader />;
     }
 
     return (
         <div className="header">
             <h1>
-                Welcome Back <br/>
+                Welcome Back <br />
                 {!isEditing && (
                     <AccountOwnerName
                         user={user}
@@ -44,10 +44,7 @@ const ProfileHeader = ({ user }) => {
             )}
 
             {isEditing && (
-                <ModifyName
-                    user={user}
-                    toggleEditingName={toggleEditingName}
-                />
+                <ModifyName user={user} toggleEditingName={toggleEditingName} />
             )}
         </div>
     );
