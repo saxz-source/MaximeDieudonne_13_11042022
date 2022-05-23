@@ -1,33 +1,37 @@
 import API from "./API";
+import { userActions } from "../features/user.slice";
+
+// Get the store once the app stack is compiling
+let store;
+export const injectStore = (_store) => {
+    store = _store;
+};
+
+// Set up the interceptor to disconnect user if unauthorized
+API.interceptors.response.use(
+    (response) => {
+        return response;
+    },
+    (error) => {
+        if (error.response.status === 401) {
+            if (store) store.dispatch(userActions.logOutUser());
+        }
+        return error;
+    }
+);
 
 /**
  * Send the login informations and get the user token
  * @param {{email : string, password:string}} payload
  * @returns {Promise<string>}
  */
-// export const logIn = async (payload) => {
-//     return API({
-//         method: "POST",
-//         url: "user/login",
-//         data: payload,
-//     })
-//         .then((res) => {
-//             if (res.status === 200 && res.data.body.token)
-//                 return res.data.body.token;
-//         })
-//         .catch((err) => console.log(err));
-// };
+
 export const logIn = async (payload) => {
     return API({
         method: "POST",
         url: "user/login",
         data: payload,
-    })
-        // .then((res) => {
-        //     if (res.status === 200 && res.data.body.token)
-        //         return res.data.body.token;
-        // })
-        // .catch((err) => console.log(err));
+    });
 };
 
 /**
@@ -35,28 +39,14 @@ export const logIn = async (payload) => {
  * @returns {Promise<{firstName:string, lastName:string}>}
  */
 export const fetchUser = async (token) => {
-   console.log("oui")
     // Add token to the headers
     const APICall = API;
-    APICall.defaults.headers.common[
-        "Authorization"
-    ] = `Bearer ${token}`;
+    APICall.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     // Execute call
     return APICall({
         method: "POST",
         url: "user/profile",
-    })
-        // .then((res) => {
-        //     const { firstName, lastName } = res.data.body;
-        //     if (res.status === 200 && firstName && lastName) {
-        //         return (res = {
-        //             firstName,
-        //             lastName,
-        //         });
-        //     }
-        //     return;
-        // })
-        // .catch((err) => console.log(err));
+    });
 };
 
 /**
@@ -74,12 +64,5 @@ export const updateUserName = async (newNames) => {
         method: "PUT",
         url: "user/profile",
         data: JSON.stringify(newNames),
-    })
-        .then((res) => {
-            if (res.status === 200) {
-                return res;
-            }
-            return;
-        })
-        .catch((err) => console.log(err));
+    });
 };

@@ -8,7 +8,10 @@ export const isUserLogged = () => {
     };
 };
 
-
+/**
+ * Return the user auth token
+ * @returns {string}
+ */
 export const loginRequestStatus = () => {
     return (state) => {
         return state.user.token;
@@ -28,20 +31,13 @@ export const getUserName = () => {
     };
 };
 
-
 /**
  * Get the user state
  * @returns {{firstName : string, lastName:string}}
  */
- export const getUser = () => {
+export const getUser = () => {
     return (state) => {
-        return state.user.user
+        return state.user.user;
     };
 };
 
-
-export const getUserToken=()=>{
-    return (state)=>{
-        state.user.token.token
-    }
-}

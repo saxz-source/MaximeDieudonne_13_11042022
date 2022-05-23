@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { updateUserName } from "../../../API/APICalls";
-import { modifyUserName, modifyUserNameRequest, userActions } from "../../../features/user.slice";
+import { modifyUserNameRequest } from "../../../features/user.slice";
 import PropTypes from "prop-types";
 import StandardButton from "../../Utils/StandardButton";
 import "./ModifyName.css";
@@ -37,10 +36,9 @@ const ModifyName = ({ user, toggleEditingName }) => {
                 firstName,
                 lastName,
             };
-            dispatch(modifyUserNameRequest(actionPayload))
-            
+            dispatch(modifyUserNameRequest(actionPayload));
         }
-        toggleEditingName()
+        toggleEditingName();
     };
 
     /**

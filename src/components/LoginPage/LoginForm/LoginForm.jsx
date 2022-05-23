@@ -2,10 +2,11 @@ import { useState } from "react";
 import "./loginForm.css";
 import { useDispatch, useSelector } from "react-redux";
 import * as userAction from "../../../features/user.slice";
-import {userActions} from "../../../features/user.slice";
+import { userActions } from "../../../features/user.slice";
 
 import StandardButton from "../../Utils/StandardButton";
 import { loginRequestStatus } from "../../../features/user.selector";
+import { validMail } from "../../../utils/chekFormDatas";
 
 /** @returns the login form */
 const LoginForm = () => {
@@ -20,10 +21,7 @@ const LoginForm = () => {
     /** The checkbox "remember me" status from form @type {boolean} */
     const [rememberMe, setRememberMe] = useState(false);
     /** The array of form errors @type {{userNameError:boolean, passwordError:boolean}} */
-    const [formErrors, setFormErrors] = useState({
-        userNameError: false,
-        passwordError: false,
-    });
+    const [formErrors, setFormErrors] = useState(false);
 
     /**
      * Save the value written in the user name field
@@ -53,17 +51,18 @@ const LoginForm = () => {
      */
     const handleForm = (e) => {
         e.preventDefault();
-        if (!userName || !password) {
+        if (!userName || !validMail(userName) || !password) {
+            setFormErrors(true);
             return;
         }
+        setFormErrors(false);
         const payload = {
             email: userName,
             password: password,
-            rememberMe : rememberMe
+            rememberMe: rememberMe,
         };
-        dispatch(userActions.rememberUser(rememberMe))
+        dispatch(userActions.rememberUser(rememberMe));
         dispatch(userAction.logInRequest(payload));
-
     };
 
     return (
@@ -98,7 +97,9 @@ const LoginForm = () => {
                 <label htmlFor="remember-me">Remember me</label>
             </div>
 
-            {logInRequestStatus.error && <div> {logInRequestStatus.error}</div>}
+            {(logInRequestStatus.error || formErrors) && (
+                <div> Mail et/ou mot de passe erroné(s)</div>
+            )}
 
             <StandardButton
                 text="Sign In"

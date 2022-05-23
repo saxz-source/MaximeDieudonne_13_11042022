@@ -1,6 +1,8 @@
 import "./Account.css";
 import StandardButton from "../../Utils/StandardButton";
-/** An account */
+import PropTypes from "prop-types";
+
+/**@returns An account */
 const Account = ({ account }) => {
     const handleView = () => {
         return;
@@ -20,11 +22,14 @@ const Account = ({ account }) => {
                     text="View transactions"
                     clickAction={handleView}
                     style="edit-button accountView"
-                >
-                </StandardButton>
+                ></StandardButton>
             </div>
         </section>
     );
+};
+
+Account.propType = {
+    account: PropTypes.object,
 };
 
 export default Account;

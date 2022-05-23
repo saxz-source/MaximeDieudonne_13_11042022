@@ -10,6 +10,7 @@ import Header from "./layers/Header/Header";
 import { useEffect } from "react";
 import { userActions } from "./features/user.slice";
 import * as userAction from "./features/user.slice";
+import Error404Page from "./pages/Error404Page/Error404Page";
 
 function App() {
     const user = useSelector(getUser());
@@ -42,9 +43,13 @@ function App() {
                         path="/profile"
                         element={<ProfilePage user={user} />}
                     ></Route>
+                    <Route
+                        exact
+                        path="/*"
+                        element={<Error404Page user={user} />}
+                    ></Route>
                 </Routes>
             </BrowserRouter>
-
             <Footer />
         </>
     );

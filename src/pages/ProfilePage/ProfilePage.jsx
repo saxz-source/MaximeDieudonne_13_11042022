@@ -1,4 +1,3 @@
-import { useDispatch } from "react-redux";
 import ProfilePageZone from "../../components/ProfilPage/ProfilePageZone/ProfilePageZone";
 import PropTypes from "prop-types";
 import { useEffect } from "react";
@@ -6,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 
 /** @returns the profile page container */
 const ProfilePage = ({ user }) => {
-    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     useEffect(() => {

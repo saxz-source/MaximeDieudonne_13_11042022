@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import "./AccountOwnerName.css"
+import "./AccountOwnerName.css";
 
 /** @returns the name part of the account header with the button to modify */
 const AccountOwnerName = ({ user }) => {
@@ -8,8 +8,6 @@ const AccountOwnerName = ({ user }) => {
             <span className="accountOwnerName">
                 {user.firstName} {user.lastName}!
             </span>
-
-     
         </>
     );
 };

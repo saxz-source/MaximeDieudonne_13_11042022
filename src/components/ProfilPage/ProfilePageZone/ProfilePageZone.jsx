@@ -1,11 +1,9 @@
 import AccountZone from "../AccountZone/AccountZone";
 import ProfileHeader from "../ProfileHeader/ProfileHeader";
 import "./ProfilePageZone.css";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-
-
-
+/** @returns the profile page zone */
 const ProfilePageZone = ({ user }) => {
     return (
         <main className="main bg-dark">
