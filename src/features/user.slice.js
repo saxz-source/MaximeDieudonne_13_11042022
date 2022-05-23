@@ -81,12 +81,14 @@ const userSlice = createSlice({
             state.token.error = null;
             state.token.token = action.payload.token;
             state.user.isLogged = true;
+            console.log(action)
             localStorage.setItem("token", `${state.token.token}`);
         });
         builder.addCase(logInRequest.rejected, (state, action) => {
             state.token.loading = false;
             state.token.error = action.error.message;
             state.user.isLogged = false;
+            console.log(action)
             console.log(state.token.error);
         });
         // FETCH USER REQUEST
@@ -97,11 +99,11 @@ const userSlice = createSlice({
             state.user.loading = false;
             state.user.firstName = action.payload.firstName;
             state.user.lastName = action.payload.lastName;
+            
         });
         builder.addCase(fetchUserRequest.rejected, (state, action) => {
             state.user.loading = false;
             state.user.error = true;
-            console.log(action);
         });
         // MODIFY NAME REQUEST
         builder.addCase(modifyUserNameRequest.pending, (state) => {

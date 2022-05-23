@@ -1,5 +1,6 @@
 import API from "./API";
 import { userActions } from "../features/user.slice";
+import {errorsActions}  from "../features/error.slice";
 
 // Get the store once the app stack is compiling
 let store;
@@ -13,6 +14,24 @@ API.interceptors.response.use(
         return response;
     },
     (error) => {
+        if (!error.response) {
+            if (store)
+                store.dispatch(
+                    errorsActions.setErrorForUser({
+                        errorText:
+                            "Serveur injoignable, vérifiez votre connexion internet",
+                    })
+                );
+        }
+        if (!error.response.status === 500) {
+            if (store)
+                store.dispatch(
+                    errorsActions.setErrorForUser({
+                        errorText:
+                            "Une erreur est survenue, veuillez réssayer plus tard",
+                    })
+                );
+        }
         if (error.response.status === 401) {
             if (store) store.dispatch(userActions.logOutUser());
         }

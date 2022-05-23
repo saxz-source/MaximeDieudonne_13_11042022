@@ -11,9 +11,12 @@ import { useEffect } from "react";
 import { userActions } from "./features/user.slice";
 import * as userAction from "./features/user.slice";
 import Error404Page from "./pages/Error404Page/Error404Page";
+import { selectErrors } from "./features/error.selector";
+import StandardErrorPage from "./pages/StandardErrorPage/StandardErrorPage";
 
 function App() {
     const user = useSelector(getUser());
+    const errors = useSelector(selectErrors());
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -22,6 +25,10 @@ function App() {
             dispatch(userAction.fetchUserRequest());
         }
     }, [localStorage.token]);
+
+    if (errors.isError) {
+        return <StandardErrorPage errors = {errors} />;
+    }
 
     return (
         <>

@@ -1,7 +1,6 @@
-
 /**
  * Check if the user written mail corresponds to a mail structure
- * @param {string} mail 
+ * @param {string} mail
  * @returns {boolean}
  */
 export const validMail = (mail) => {
@@ -10,8 +9,8 @@ export const validMail = (mail) => {
             mail
         )
     ) {
-        return true
+        return true;
     } else {
-        return false
+        return false;
     }
 };
