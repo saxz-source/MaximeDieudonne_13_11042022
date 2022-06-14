@@ -61,7 +61,7 @@ const LoginForm = () => {
             password: password,
             rememberMe: rememberMe,
         };
-        dispatch(userActions.rememberUser(rememberMe));
+       // dispatch(userActions.rememberUser(rememberMe));
         dispatch(userAction.logInRequest(payload));
     };
 

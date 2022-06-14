@@ -8,11 +8,11 @@ import { getUser } from "./features/user.selector";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "./layers/Header/Header";
 import { useEffect } from "react";
-import { userActions } from "./features/user.slice";
-import * as userAction from "./features/user.slice";
+import { fetchUserRequest, userActions } from "./features/user.slice";
 import Error404Page from "./pages/Error404Page/Error404Page";
 import { selectErrors } from "./features/error.selector";
 import StandardErrorPage from "./pages/StandardErrorPage/StandardErrorPage";
+import { getTokenFromStorage } from "./utils/handleUserRemembering";
 
 function App() {
     const user = useSelector(getUser());
@@ -20,14 +20,16 @@ function App() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (localStorage.token) {
-            dispatch(userActions.logUserWithStorage(localStorage.token));
-            dispatch(userAction.fetchUserRequest());
+        const tokenFromStorage = getTokenFromStorage()
+        if (tokenFromStorage) {
+            dispatch(userActions.logUserWithStorage(tokenFromStorage));
+            dispatch(fetchUserRequest(tokenFromStorage));
         }
-    }, [localStorage.token]);
+    }, [localStorage.token, sessionStorage.token]);
+
 
     if (errors.isError) {
-        return <StandardErrorPage errors = {errors} />;
+        return <StandardErrorPage errors={errors} />;
     }
 
     return (
@@ -50,11 +52,7 @@ function App() {
                         path="/profile"
                         element={<ProfilePage user={user} />}
                     ></Route>
-                    <Route
-                        exact
-                        path="/*"
-                        element={<Error404Page user={user} />}
-                    ></Route>
+                    <Route exact path="/*" element={<Error404Page />}></Route>
                 </Routes>
             </BrowserRouter>
             <Footer />

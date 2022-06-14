@@ -8,7 +8,7 @@ export const injectStore = (_store) => {
     store = _store;
 };
 
-// Set up the interceptor to disconnect user if unauthorized
+// Set up the interceptor to disconnect user if unauthorized or display errors to user
 API.interceptors.response.use(
     (response) => {
         return response;
@@ -23,7 +23,7 @@ API.interceptors.response.use(
                     })
                 );
         }
-        if (!error.response.status === 500) {
+        if (error.response.status === 500) {
             if (store)
                 store.dispatch(
                     errorsActions.setErrorForUser({
@@ -42,7 +42,7 @@ API.interceptors.response.use(
 /**
  * Send the login informations and get the user token
  * @param {{email : string, password:string}} payload
- * @returns {Promise<string>}
+ * @returns {AxiosInstance}
  */
 
 export const logIn = async (payload) => {
@@ -55,7 +55,8 @@ export const logIn = async (payload) => {
 
 /**
  * Fetch the user Names
- * @returns {Promise<{firstName:string, lastName:string}>}
+ * @param {string} token the authentication token
+ * @returns {AxiosInstance}
  */
 export const fetchUser = async (token) => {
     // Add token to the headers
@@ -70,15 +71,16 @@ export const fetchUser = async (token) => {
 
 /**
  * Update user name
- * @param {string} token
- * @returns {Promise<{firstName:string, lastName:string}>}
+ * @param {string} newNames
+ * @returns {AxiosInstance}
  */
-export const updateUserName = async (newNames) => {
+export const updateUserName = async (newNames, token) => {
+    console.log(token)
     // Add token to the headers
     const APICall = API;
     APICall.defaults.headers.common[
         "Authorization"
-    ] = `Bearer ${localStorage.token}`;
+    ] = `Bearer ${token}`;
     return APICall({
         method: "PUT",
         url: "user/profile",

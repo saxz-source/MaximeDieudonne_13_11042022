@@ -1,5 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { logIn, updateUserName, fetchUser } from "../API/APICalls";
+import {
+    handleUserRemembering,
+    removeTokenFromStorage,
+} from "../utils/handleUserRemembering";
+import { sleepFunction } from "../utils/sleepFunction";
 
 const initialUserState = {
     token: {
@@ -25,7 +30,8 @@ export const logInRequest = createAsyncThunk(
     "user/logInRequest",
     async (data) => {
         const response = await logIn(data);
-        return response.data.body;
+        //  console.log(response.data.body)
+        return { apiResponse: response.data.body, rememberMe: data.rememberMe };
     }
 );
 
@@ -34,8 +40,8 @@ export const logInRequest = createAsyncThunk(
  */
 export const fetchUserRequest = createAsyncThunk(
     "user/fetchUserRequest",
-    async (data, { getState }) => {
-        const token = getState().user.token.token;
+    async (token) => {
+        // await  sleepFunction()
         const response = await fetchUser(token);
         return response.data.body;
     }
@@ -47,7 +53,7 @@ export const fetchUserRequest = createAsyncThunk(
 export const modifyUserNameRequest = createAsyncThunk(
     "user/modifyUserNameRequest",
     async (data) => {
-        const response = await updateUserName(data);
+        const response = await updateUserName(data.apiPayload, data.token);
         return response.data.body;
     }
 );
@@ -65,7 +71,7 @@ const userSlice = createSlice({
         },
         // disconnect the user
         logOutUser: (state, action) => {
-            localStorage.removeItem("token");
+            removeTokenFromStorage();
             state.user.isLogged = false;
             state = initialUserState;
         },
@@ -79,17 +85,16 @@ const userSlice = createSlice({
         builder.addCase(logInRequest.fulfilled, (state, action) => {
             state.token.loading = false;
             state.token.error = null;
-            state.token.token = action.payload.token;
+            state.token.token = action.payload.apiResponse.token;
+            state.user.rememberMe = action.payload.rememberMe;
             state.user.isLogged = true;
-            console.log(action)
-            localStorage.setItem("token", `${state.token.token}`);
+
+            handleUserRemembering(state.user.rememberMe, state.token.token);
         });
         builder.addCase(logInRequest.rejected, (state, action) => {
             state.token.loading = false;
             state.token.error = action.error.message;
             state.user.isLogged = false;
-            console.log(action)
-            console.log(state.token.error);
         });
         // FETCH USER REQUEST
         builder.addCase(fetchUserRequest.pending, (state) => {
@@ -99,7 +104,6 @@ const userSlice = createSlice({
             state.user.loading = false;
             state.user.firstName = action.payload.firstName;
             state.user.lastName = action.payload.lastName;
-            
         });
         builder.addCase(fetchUserRequest.rejected, (state, action) => {
             state.user.loading = false;
@@ -117,7 +121,6 @@ const userSlice = createSlice({
         builder.addCase(modifyUserNameRequest.rejected, (state, action) => {
             state.user.loading = false;
             state.user.error = true;
-            console.log(action.error);
         });
     },
 });

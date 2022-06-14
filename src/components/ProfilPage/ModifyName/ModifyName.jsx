@@ -4,6 +4,7 @@ import { modifyUserNameRequest } from "../../../features/user.slice";
 import PropTypes from "prop-types";
 import StandardButton from "../../Utils/StandardButton";
 import "./ModifyName.css";
+import { getTokenFromStorage } from "../../../utils/handleUserRemembering";
 
 /** @returns The form to edit the name is the profile page */
 const ModifyName = ({ user, toggleEditingName }) => {
@@ -32,11 +33,14 @@ const ModifyName = ({ user, toggleEditingName }) => {
     const handleSaveName = (e) => {
         e.preventDefault();
         if (firstName && lastName) {
-            const actionPayload = {
-                firstName,
-                lastName,
+            const thunkDatas = {
+                apiPayload: {
+                    firstName,
+                    lastName,
+                },
+                token: getTokenFromStorage(),
             };
-            dispatch(modifyUserNameRequest(actionPayload));
+            dispatch(modifyUserNameRequest(thunkDatas));
         }
         toggleEditingName();
     };
