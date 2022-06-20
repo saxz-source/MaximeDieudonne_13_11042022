@@ -1,12 +1,16 @@
-    "eslintConfig": {
-        "extends": [
-            "react-app",
-            "react-app/jest"
-        ]
-    },
+# Argent Bank app
+
+## Description
+
+Front-End of the application. A bank application where users can view their bank accounts.
+
+## Technologies
+
+ReactJS (create react app)
+Redux (redux - react-redux - @reduxjs/toolkit)
 
 
-        "eslint-config-react-app": "^6.0.0",
+# Handle React JS :
 
 # Getting Started with Create React App
 
